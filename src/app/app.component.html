@@ -3,12 +3,36 @@
 <!-- this creates a google map on the page with the given lat/lng from -->
 <!-- the component as the initial center of the map: -->
 <agm-map (mapClick)="mapClicked($event)" [zoom]="zoom" [disableDefaultUI]="false" [latitude]="lat" [longitude]="lng" [zoomControl]="false">
-    <agm-marker *ngFor="let m of markers;let i = index" (markerClick)="clickedMarker(m.label, i)" [markerDraggable]="m.draggable" [label]="m.label" [latitude]="m.lat" [longitude]="m.lng">
-        <agm-info-window>
-            <strong>InfoWindow content</strong>
-        </agm-info-window>
-    </agm-marker>
-    <!-- <agm-circle [latitude]="lat" [longitude]="lng"></agm-circle> -->
-    <agm-circle [latitude]="lat + 0.3" [longitude]="lng" [strokeWeight]="2" [radius]="10000" [fillColor]="'green'" [circleDraggable]="false" [editable]="true">
-    </agm-circle>
+  <agm-marker *ngFor="let m of markers;let i = index" (markerClick)="clickedMarker(m.label, i)" [markerDraggable]="m.draggable"
+    [label]="m.label" [latitude]="m.lat" [longitude]="m.lng">
+    <agm-info-window>
+      <strong>InfoWindow content</strong>
+    </agm-info-window>
+  </agm-marker>
+  <!-- <agm-circle [latitude]="lat" [longitude]="lng"></agm-circle> -->
+  <agm-circle (radiusChange)="changedRadiusCircle($event)" (circleDblClick)="doubleClickedCircle($event)" (circleClick)="clickedCircle($event)"
+    (centerChange)="changedCircleCenter($event)" [latitude]="lat" [longitude]="lng" [radius]="20000" [fillColor]="'green'"
+    [circleDraggable]="true" [editable]="true">
+
+
+
+  </agm-circle>
 </agm-map>
+
+
+
+<!-- <agm-circle *ngFor="let m of geofences | async | fbFilterDraw: settingsCircle; let i = index" [latitude]="m.coords.latitude"
+  [longitude]="m.coords.longitude" [radius]="m.coords.radius" [strokeColor]='"#FF0000"' [strokeOpacity]='0.8' [strokeWeight]='1'
+  <---- Causes an error [fillColor]='"#FF0000"' [fillOpacity]='0.35'>
+</agm-circle> -->
+
+
+
+
+
+
+
+<!-- Shared info window for -- not per GeoJson obj, but shared among them -->
+<!-- <agm-info-window [isOpen]="infoWindowOpen" [maxWidth]="550" [latitude]="infoWinLat" [longitude]="infoWinLng" (infoWindowClose)="infoWinClosed($event)">
+  <pre>{{ infoContent }}</pre>
+</agm-info-window> -->

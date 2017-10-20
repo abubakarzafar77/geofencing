@@ -1,5 +1,5 @@
-import { Component, NgZone } from '@angular/core';
-
+import { Component, NgZone, OnInit, } from '@angular/core';
+// import { AsyncPipe } from '@angular/common';
 
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
@@ -8,24 +8,61 @@ import { } from 'googlemaps';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     constructor(
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone,
     ) { }
     title: string = 'My first AGM project';
-    lat: number = 51.678418;
-    lng: number = 7.809007;
-    zoom: number = 8;
+    lat: number;
+    lng: number;
+    zoom: number;
+
+
+    ngOnInit() {
+        this.lat = 51.85571474986211;
+        this.lng = 8.5198974609375;
+        this.zoom = 8;
+
+        this.mapsAPILoader.load().then(() => {
+            this.ngZone.run(() => {
+
+                this.lat = 51.85571474986211;
+                this.lng = 8.5198974609375;
+                this.zoom = 8;
+            });
+        })
+    }
+    //when  changed  the circle location 
+    changedCircleCenter($event) {
+        // console.log($event);
+    }
+    //when  clicked the circle 
+    clickedCircle($event) {
+        // console.log($event);
+    }
+    //when dbl clicked the circle 
+    doubleClickedCircle($event) {
+        console.log($event);
+    }
+    changedRadiusCircle($event) {
+        console.log($event);
+    }
+
+
+
 
 
     mapClicked($event) {
+
+        console.log($event);
+
         var totalMarker: number = this.markers.length;
         // console.log(String.fromCharCode(65 + totalMarker));
         var nextLabel: string = String.fromCharCode(65 + totalMarker)
 
-        console.log(this.markers.length);
+        // console.log(this.markers.length);
         this.markers.push({
             lat: $event.coords.lat,
             lng: $event.coords.lng,
